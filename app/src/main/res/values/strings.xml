@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SESA</string>
+    <string name="emergencyButtonTitle">Emergency</string>
+    <string name="scheduleButtonTitle">Schedule</string>
+    <string name="patientNameTitle">Name</string>
+    <string name="patientIDTitle">Patient ID</string>
+    <string name="patientNameHint">Patient Name</string>
+    <string name="patientIDHint">Patient ID</string>
+    <string name="invalidQRCodeMessage">Invalid QR Code, this code doesn\'t contain Patient Details</string>
+    <string name="scheduleInfoText">Select the physician or specialty to continue</string>
 </resources>
