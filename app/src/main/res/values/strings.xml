@@ -8,4 +8,14 @@
     <string name="patientIDHint">Patient ID</string>
     <string name="invalidQRCodeMessage">Invalid QR Code, this code doesn\'t contain Patient Details</string>
     <string name="scheduleInfoText">Select the physician or specialty to continue</string>
+    <string name="title_activity_emergency_sos">Map</string>
+    <string name="confirmSOSText">Confirm SOS</string>
+    <string name="physicianRadioText">Physician</string>
+    <string name="specialtyRadioText">Specialty</string>
+    <string name="scheduleContinueText">Continue</string>
+    <string name="pickDateText">Pick date</string>
+    <string name="slotInfoText">Pick the date and time for your appointment</string>
+    <string name="pickTimeText">Pick Time</string>
+    <string name="confirmScheduleText">Confirm</string>
+    <string name="AdditionalInfoText">Additional information</string>
 </resources>
