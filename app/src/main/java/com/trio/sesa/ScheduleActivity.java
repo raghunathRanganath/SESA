@@ -33,6 +33,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private Button scheduleContinueButton;
     long physicianRadioButtonID = 2131165324;
+    long specialtyRadioButtonID = 2131165365;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
         doctorDropDown.setEnabled(false);
         specialtyDropDown.setEnabled(false);
+        scheduleContinueButton.setEnabled(false);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -59,9 +61,11 @@ public class ScheduleActivity extends AppCompatActivity {
                 if(i == R.id.physicianRB) {
                     doctorDropDown.setEnabled(true);
                     specialtyDropDown.setEnabled(false);
+                    scheduleContinueButton.setEnabled(true);
                 } else if(i == R.id.specialtyRB) {
                     specialtyDropDown.setEnabled(true);
                     doctorDropDown.setEnabled(false);
+                    scheduleContinueButton.setEnabled(true);
                 }
             }
         });
@@ -81,7 +85,13 @@ public class ScheduleActivity extends AppCompatActivity {
                 if(radioGroup.getCheckedRadioButtonId() == physicianRadioButtonID) {
                     slotSelectionIntent.putExtra("PhysicianName", doctorDropDown.getSelectedItem().toString());
                 } else {
+                    slotSelectionIntent.putExtra("PhysicianName", "");
+                }
+
+                if(radioGroup.getCheckedRadioButtonId() == specialtyRadioButtonID) {
                     slotSelectionIntent.putExtra("SpecialtyName", specialtyDropDown.getSelectedItem().toString());
+                } else {
+                    slotSelectionIntent.putExtra("SpecialtyName", "");
                 }
                 slotSelectionIntent.putExtra("PatientName", pname);
                 slotSelectionIntent.putExtra("PatientID", pid);

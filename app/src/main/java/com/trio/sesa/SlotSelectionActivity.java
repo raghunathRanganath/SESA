@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -36,12 +35,14 @@ public class SlotSelectionActivity extends AppCompatActivity {
     EditText time;
     DatePickerDialog datePickerDialog;
     Button confirmButton;
+    EditText commentsText;
 
     String physicianName = "";
     String specialtyName = "";
     String patientName = "";
     String patientID = "";
     String scheduleDate = "";
+    String comments = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,9 @@ public class SlotSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_slot_selection);
         Intent slotIntent = getIntent();
         confirmButton = (Button)findViewById(R.id.confirmScheduleButton);
+        confirmButton.setEnabled(false);
+
+        commentsText = (EditText)findViewById(R.id.commentsEditText);
 
         patientName = slotIntent.getStringExtra("PatientName");
         patientID = slotIntent.getStringExtra("PatientID");
@@ -77,10 +81,16 @@ public class SlotSelectionActivity extends AppCompatActivity {
                                 // set day of month , month and year value in the edit text
                                 datePicker.setText(dayOfMonth + "/"
                                         + (monthOfYear + 1) + "/" + year);
-
+                                confirmButton.setEnabled(true);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
+
+                if(datePicker.getText().equals("")) {
+                    confirmButton.setEnabled(false);
+                } else {
+                    confirmButton.setEnabled(true);
+                }
             }
         });
 
@@ -95,12 +105,17 @@ public class SlotSelectionActivity extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(SlotSelectionActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        Toast.makeText(SlotSelectionActivity.this, selectedHour + ":" + selectedMinute, Toast.LENGTH_SHORT).show();
                         time.setText(selectedHour + ":" + selectedMinute + ":00");
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
+
+                if(time.getText().equals("")) {
+                    confirmButton.setEnabled(false);
+                } else {
+                    confirmButton.setEnabled(true);
+                }
             }
         });
 
@@ -109,7 +124,8 @@ public class SlotSelectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 scheduleDate = datePicker.getText() + " " + time.getText();
-                new ExecuteTask().execute(patientName, patientID, physicianName, specialtyName, scheduleDate);
+                comments = commentsText.getText().toString();
+                new ExecuteTask().execute(patientName, patientID, physicianName, specialtyName, scheduleDate, comments);
             }
         });
     }
@@ -124,6 +140,10 @@ public class SlotSelectionActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(SlotSelectionActivity.this, "Execution completed, Schedule created", Toast.LENGTH_SHORT).show();
+            Intent scheduleConfirmedIntent = new Intent(SlotSelectionActivity.this, ScheduleConfirmation.class);
+            scheduleConfirmedIntent.putExtra("scheduleId", result);
+            startActivity(scheduleConfirmedIntent);
+
         }
     }
 
@@ -139,6 +159,7 @@ public class SlotSelectionActivity extends AppCompatActivity {
             list.add(new BasicNameValuePair("physicianName", values[2]));
             list.add(new BasicNameValuePair("specialtyName", values[3]));
             list.add(new BasicNameValuePair("scheduleDate", values[4]));
+            list.add(new BasicNameValuePair("comments", values[5]));
             httpPost.setEntity(new UrlEncodedFormEntity(list));
             HttpResponse httpResponse = httpClient.execute(httpPost);
 
@@ -163,7 +184,7 @@ public class SlotSelectionActivity extends AppCompatActivity {
             while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
             }
-            return_text = sb.toString().split("\b")[1];
+            return_text = sb.toString().substring(sb.length()-4);
         } catch (Exception e) {
 
         }

@@ -18,4 +18,5 @@
     <string name="pickTimeText">Pick Time</string>
     <string name="confirmScheduleText">Confirm</string>
     <string name="AdditionalInfoText">Additional information</string>
+    <string name="scheduleConfirmationText">Schedule has been created with below details</string>
 </resources>

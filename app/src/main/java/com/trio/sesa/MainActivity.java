@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 emergencySOS();
             }
         });
+
     }
 
     /*Function which detects the NFC tap on the phone and launches the app*/
