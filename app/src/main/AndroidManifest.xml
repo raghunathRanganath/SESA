@@ -69,7 +69,8 @@
         <activity
             android:name=".EmergencySOSActivity"
             android:label="@string/title_activity_emergency_sos" />
-        <activity android:name=".SlotSelectionActivity"></activity>
+        <activity android:name=".SlotSelectionActivity" />
+        <activity android:name=".ScheduleConfirmation"></activity>
         <activity android:name=".EmergencyRegistration" />
     </application>
 
