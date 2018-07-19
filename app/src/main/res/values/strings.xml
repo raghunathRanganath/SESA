@@ -19,4 +19,7 @@
     <string name="confirmScheduleText">Confirm</string>
     <string name="AdditionalInfoText">Additional information</string>
     <string name="scheduleConfirmationText">Schedule has been created with below details</string>
+    <string name="serverIP">http://192.168.0.104:8084/SESA_WS/</string>
+    <string name="scheduleConfirmationMessage">Hello, Your schedule has been created for @date@ at @time@. Please arrive at the hospital 15 mins prior to your appointment.</string>
+    <string name="hospitalAddress">PIC, Manyata Tech park, Bangalore, 15</string>
 </resources>

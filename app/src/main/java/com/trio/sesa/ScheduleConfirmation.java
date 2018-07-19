@@ -27,6 +27,11 @@ import java.util.List;
 public class ScheduleConfirmation extends AppCompatActivity {
 
     EditText scheduleID;
+    EditText phySpecDetail;
+    EditText patientName;
+    EditText scheduleDateTime;
+    EditText additionalInfo;
+
     ImageButton homeButton;
     ImageButton logoutButton;
 
@@ -37,9 +42,29 @@ public class ScheduleConfirmation extends AppCompatActivity {
         Intent scheduleConfirmationIntent = getIntent();
 
         scheduleID = (EditText)findViewById(R.id.ScheduleID);
+        phySpecDetail = (EditText)findViewById(R.id.physpecBox);
+        patientName = (EditText)findViewById(R.id.patientNameBox);
+        scheduleDateTime = (EditText)findViewById(R.id.scheduleDateText);
+        additionalInfo = (EditText)findViewById(R.id.AdditionalInfoBox);
 
         scheduleID.setText(scheduleConfirmationIntent.getStringExtra("scheduleId"));
-        new ExecuteTask().execute(scheduleID.getText().toString());
+        scheduleID.setEnabled(false);
+        phySpecDetail.setText(scheduleConfirmationIntent.getStringExtra("phySpecDetail"));
+        phySpecDetail.setEnabled(false);
+        patientName.setText(scheduleConfirmationIntent.getStringExtra("patientName"));
+        patientName.setEnabled(false);
+        scheduleDateTime.setText(scheduleConfirmationIntent.getStringExtra("scheduleDateTime"));
+        scheduleDateTime.setEnabled(false);
+        String scheduleDateTime = scheduleConfirmationIntent.getStringExtra("scheduleDateTime");
+        String scheduleDate = scheduleDateTime.substring(0,scheduleDateTime.indexOf(" "));
+        String scheduleTime = scheduleDateTime.substring(scheduleDateTime.indexOf(" "));
+        String finalComment = ScheduleConfirmation.this.getString(R.string.scheduleConfirmationMessage).replace("@date@",scheduleDate);
+        finalComment = finalComment.replace("@time@",scheduleTime);
+        String hospitalAddress = ScheduleConfirmation.this.getString(R.string.hospitalAddress);
+        additionalInfo.setText(finalComment + "\n" + hospitalAddress);
+        additionalInfo.setEnabled(false);
+
+//        new ExecuteTask().execute(scheduleID.getText().toString());
 
         homeButton = (ImageButton)findViewById(R.id.homeButton);
         logoutButton = (ImageButton)findViewById(R.id.logoutButton);

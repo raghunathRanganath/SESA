@@ -32,8 +32,8 @@ public class ScheduleActivity extends AppCompatActivity {
     private EditText patientName;
     private RadioGroup radioGroup;
     private Button scheduleContinueButton;
-    long physicianRadioButtonID = 2131165324;
-    long specialtyRadioButtonID = 2131165365;
+    long physicianRadioButtonID = 2131165335; //2131165324;
+    long specialtyRadioButtonID = 2131165380; //2131165365;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

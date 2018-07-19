@@ -179,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
         String s = "";
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.43.103:8084/SESA_WS/auth/patientAuth");
+            String serverPath = MainActivity.this.getString(R.string.serverIP);
+            HttpPost httpPost = new HttpPost(serverPath + "auth/patientAuth");
 
             List<NameValuePair> list = new ArrayList<NameValuePair>();
             list.add(new BasicNameValuePair("pname", values[0]));

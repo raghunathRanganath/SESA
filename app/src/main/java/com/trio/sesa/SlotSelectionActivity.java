@@ -139,9 +139,13 @@ public class SlotSelectionActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(SlotSelectionActivity.this, "Execution completed, Schedule created", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(SlotSelectionActivity.this, "Execution completed, Schedule created", Toast.LENGTH_SHORT).show();
             Intent scheduleConfirmedIntent = new Intent(SlotSelectionActivity.this, ScheduleConfirmation.class);
             scheduleConfirmedIntent.putExtra("scheduleId", result);
+            scheduleConfirmedIntent.putExtra("phySpecDetail", physicianName.equals("") ? specialtyName : physicianName );
+            scheduleConfirmedIntent.putExtra("patientName", patientName);
+            scheduleConfirmedIntent.putExtra("scheduleDateTime", scheduleDate);
+
             startActivity(scheduleConfirmedIntent);
 
         }
@@ -151,7 +155,8 @@ public class SlotSelectionActivity extends AppCompatActivity {
         String s = "";
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.43.103:8084/SESA_WS/createSchedule");
+            String serverPath = SlotSelectionActivity.this.getString(R.string.serverIP);
+            HttpPost httpPost = new HttpPost(serverPath + "createSchedule");
 
             List<NameValuePair> list = new ArrayList<NameValuePair>();
             list.add(new BasicNameValuePair("pname", values[0]));
