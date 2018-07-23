@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -32,13 +33,15 @@ public class ScheduleActivity extends AppCompatActivity {
     private EditText patientName;
     private RadioGroup radioGroup;
     private Button scheduleContinueButton;
-    long physicianRadioButtonID = 2131165335; //2131165324;
-    long specialtyRadioButtonID = 2131165380; //2131165365;
+    private RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+        getSupportActionBar().setTitle("SESA"); // for set actionbar title
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent scheduleIntent = getIntent();
         patientName = (EditText)findViewById(R.id.PatientName);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
@@ -82,13 +85,14 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent slotSelectionIntent = new Intent(ScheduleActivity.this, SlotSelectionActivity.class);
-                if(radioGroup.getCheckedRadioButtonId() == physicianRadioButtonID) {
+                radioButton = (RadioButton) radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
+                if(radioButton.getText().equals("Physician")) {
                     slotSelectionIntent.putExtra("PhysicianName", doctorDropDown.getSelectedItem().toString());
                 } else {
                     slotSelectionIntent.putExtra("PhysicianName", "");
                 }
 
-                if(radioGroup.getCheckedRadioButtonId() == specialtyRadioButtonID) {
+                if(radioButton.getText().equals("Specialty")) {
                     slotSelectionIntent.putExtra("SpecialtyName", specialtyDropDown.getSelectedItem().toString());
                 } else {
                     slotSelectionIntent.putExtra("SpecialtyName", "");

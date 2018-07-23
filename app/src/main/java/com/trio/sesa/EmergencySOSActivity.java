@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +25,21 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmergencySOSActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -63,6 +79,7 @@ public class EmergencySOSActivity extends FragmentActivity implements OnMapReady
             @Override
             public void onClick(View view) {
                 Toast.makeText(EmergencySOSActivity.this, "The patient's current position is: "+ CURRENT_LAT + "," + CURRENT_LON, Toast.LENGTH_LONG).show();
+                new ExecuteTask().execute(CURRENT_LAT.toString(), CURRENT_LON.toString());
             }
         });
     }
@@ -156,9 +173,59 @@ public class EmergencySOSActivity extends FragmentActivity implements OnMapReady
         mMap = googleMap;
         updateLocationUI();
         getDeviceLocation();
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    class ExecuteTask extends AsyncTask<String, Integer, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String res = PostData(params);
+            return res;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(EmergencySOSActivity.this, result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public String PostData(String[] values) {
+        String s = "";
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            String serverPath = EmergencySOSActivity.this.getString(R.string.serverIP);
+            HttpPost httpPost = new HttpPost(serverPath + "emergencyService");
+
+            List<NameValuePair> list = new ArrayList<NameValuePair>();
+            list.add(new BasicNameValuePair("latitude", values[0]));
+            list.add(new BasicNameValuePair("longitude", values[1]));
+            httpPost.setEntity(new UrlEncodedFormEntity(list));
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+
+            HttpEntity httpEntity = httpResponse.getEntity();
+            s = readResponse(httpResponse);
+
+        } catch (Exception exception) {
+        }
+        return s;
+
+
+    }
+
+    public String readResponse(HttpResponse res) {
+        InputStream is = null;
+        String return_text = "";
+        try {
+            is = res.getEntity().getContent();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+            String line = "";
+            StringBuffer sb = new StringBuffer();
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+            return_text = sb.toString().split("\b")[1];
+        } catch (Exception e) {
+
+        }
+        return return_text;
     }
 }

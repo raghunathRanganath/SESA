@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("SESA"); // for set actionbar title
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         patientName = (EditText) findViewById(R.id.PatientName);
         patientName.requestFocus();
@@ -79,6 +84,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.emergency:
+                startActivity(new Intent(this, EmergencyRegistration.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /*Function which detects the NFC tap on the phone and launches the app*/
@@ -180,10 +201,10 @@ public class MainActivity extends AppCompatActivity {
         String s = "";
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            InetAddress address = InetAddress.getByName(getString(R.string.host_name));
-            HttpPost httpPost = new HttpPost("http://"+ address.getHostAddress() +":8084/SESA_WS/auth/patientAuth");
-//            String serverPath = MainActivity.this.getString(R.string.serverIP);
-//            HttpPost httpPost = new HttpPost(serverPath + "auth/patientAuth");
+//            InetAddress address = InetAddress.getByName(getString(R.string.host_name));
+//            HttpPost httpPost = new HttpPost("http://"+ address.getHostAddress() +":8084/SESA_WS/auth/patientAuth");
+            String serverPath = MainActivity.this.getString(R.string.serverIP);
+            HttpPost httpPost = new HttpPost(serverPath + "auth/patientAuth");
 
             List<NameValuePair> list = new ArrayList<NameValuePair>();
             list.add(new BasicNameValuePair("pname", values[0]));

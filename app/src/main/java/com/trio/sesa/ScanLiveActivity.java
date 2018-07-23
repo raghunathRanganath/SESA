@@ -34,6 +34,8 @@ public class ScanLiveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_live);
+        getSupportActionBar().setTitle("SESA"); // for set actionbar title
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         surfaceViewer = (SurfaceView) findViewById(R.id.surfaceViewBox);
 

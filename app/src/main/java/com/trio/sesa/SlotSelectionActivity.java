@@ -48,6 +48,9 @@ public class SlotSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slot_selection);
+        getSupportActionBar().setTitle("SESA"); // for set actionbar title
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent slotIntent = getIntent();
         confirmButton = (Button)findViewById(R.id.confirmScheduleButton);
         confirmButton.setEnabled(false);
@@ -64,6 +67,7 @@ public class SlotSelectionActivity extends AppCompatActivity {
         }
 
         datePicker = (EditText)findViewById(R.id.datePickEditText);
+        time = (EditText)findViewById(R.id.timePickEditText);
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +85,7 @@ public class SlotSelectionActivity extends AppCompatActivity {
                                 // set day of month , month and year value in the edit text
                                 datePicker.setText(dayOfMonth + "/"
                                         + (monthOfYear + 1) + "/" + year);
+                                time.callOnClick();
                                 confirmButton.setEnabled(true);
                             }
                         }, mYear, mMonth, mDay);
@@ -94,7 +99,6 @@ public class SlotSelectionActivity extends AppCompatActivity {
             }
         });
 
-        time = (EditText)findViewById(R.id.timePickEditText);
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,7 +109,10 @@ public class SlotSelectionActivity extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(SlotSelectionActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        time.setText(selectedHour + ":" + selectedMinute + ":00");
+                        if(selectedMinute < 10)
+                            time.setText(selectedHour + ":" + "0" + selectedMinute + ":00");
+                        else
+                            time.setText(selectedHour + ":" + selectedMinute + ":00");
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -118,7 +125,7 @@ public class SlotSelectionActivity extends AppCompatActivity {
                 }
             }
         });
-
+        datePicker.callOnClick();
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override

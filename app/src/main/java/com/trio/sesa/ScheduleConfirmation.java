@@ -39,6 +39,9 @@ public class ScheduleConfirmation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_confirmation);
+        getSupportActionBar().setTitle("SESA"); // for set actionbar title
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent scheduleConfirmationIntent = getIntent();
 
         scheduleID = (EditText)findViewById(R.id.ScheduleID);
@@ -86,6 +89,12 @@ public class ScheduleConfirmation extends AppCompatActivity {
         });
     }
 
+    public void onBackPressed() {
+        Intent mainIntent = new Intent(ScheduleConfirmation.this, MainActivity.class);
+        startActivity(mainIntent);
+        finish();
+    }
+
     private class ExecuteTask extends AsyncTask<String, Integer, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -107,7 +116,8 @@ public class ScheduleConfirmation extends AppCompatActivity {
         String s = "";
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.43.103:8084/SESA_WS/getSchedule");
+            String serverPath = ScheduleConfirmation.this.getString(R.string.serverIP);
+            HttpPost httpPost = new HttpPost(serverPath + "getSchedule");
 
             List<NameValuePair> list = new ArrayList<NameValuePair>();
             list.add(new BasicNameValuePair("sid", values[0]));

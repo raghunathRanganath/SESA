@@ -19,15 +19,18 @@
     <string name="confirmScheduleText">Confirm</string>
     <string name="AdditionalInfoText">Additional information</string>
     <string name="scheduleConfirmationText">Schedule has been created with below details</string>
-    <string name="serverIP">http://192.168.0.104:8084/SESA_WS/</string>
+    <string name="serverIP">http://192.168.0.104:8084/SESA_WS/</string><!--192.168.0.104-->
     <string name="scheduleConfirmationMessage">Hello, Your schedule has been created for @date@ at @time@. Please arrive at the hospital 15 mins prior to your appointment.</string>
     <string name="hospitalAddress">PIC, Manyata Tech park, Bangalore, 15</string>
     <string name="host_name">YY036182</string>
     <string name="reg_main_title">Enter Emergency Contact Details</string>
     <string name="PatientContactNumber">Patient Contact Number</string>
     <string name="ContactNumberHint">Contact Number</string>
+    <string name="ContactNameHint">Contact Name</string>
     <string name="EmergencyContactPersonName">Emergency Contact Person Name</string>
     <string name="EmergecyContactNumber">Emergency Person Contact Number</string>
     <string name="Register">Register</string>
     <string name="Cancel">Cancel</string>
+    <string name="PatientAge">Patient Age</string>
+    <string name="PatientBloodGroup">Patient Blood Group</string>
 </resources>
