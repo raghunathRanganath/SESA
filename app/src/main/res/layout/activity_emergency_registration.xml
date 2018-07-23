@@ -8,7 +8,7 @@
         tools:context=".MainActivity">
 
         <EditText
-            android:id="@+id/edtPtContactNo3"
+            android:id="@+id/edtPtAge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -79,7 +79,7 @@
             app:layout_constraintVertical_bias="0.396" />
 
         <EditText
-            android:id="@+id/edtPtContactNo"
+            android:id="@+id/edtPtBloodGrp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -97,7 +97,7 @@
             app:layout_constraintVertical_bias="0.743" />
 
         <EditText
-            android:id="@+id/edtPtContactNo2"
+            android:id="@+id/edtPtContactNo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -282,5 +282,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.895" />
-
+    <ImageButton
+        android:id="@+id/homeButton"
+        android:layout_width="44dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.024"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.091"
+        app:srcCompat="@drawable/home32" />
     </android.support.constraint.ConstraintLayout>

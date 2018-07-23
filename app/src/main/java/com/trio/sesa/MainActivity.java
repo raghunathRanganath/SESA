@@ -95,7 +95,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.emergency:
-                startActivity(new Intent(this, EmergencyRegistration.class));
+                Intent emergencyReg = new Intent(MainActivity.this, ScanLiveActivity.class);
+                emergencyReg.putExtra("PatientName", patientName.getText().toString());
+                emergencyReg.putExtra("PatientID", patientId.getText().toString());
+                startActivity(emergencyReg);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
